@@ -1,0 +1,18 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    environment:
+      ConnectionStrings__Default: "Data Source=/data/asx-insights.db"
+    volumes:
+      - asx-data:/data
+    ports:
+      - "5080:8080"
+  web:
+    build: ./frontend
+    depends_on: [api]
+    ports:
+      - "8081:80"
+volumes:
+  asx-data:
